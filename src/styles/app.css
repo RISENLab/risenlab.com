@@ -1,0 +1,38 @@
+@import './fonts.css';
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@plugin 'daisyui' {
+    themes: false;
+};
+@plugin "daisyui/theme" {
+    name: "light";
+    default: true;
+    --color-primary: #b246cc;
+    --color-secondary: #3D76CC;
+    --radius-selector: 0.25rem;
+    --radius-field: 0.25rem;
+    --radius-box: 0.25rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 0;
+    --noise: 0;
+}
+
+@theme {
+    --breakpoint-xs: 30rem;
+    --font-sans: Rubik,ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+
+@layer utilities{
+    .prose {
+        & h1 {
+            @apply text-primary;
+        }
+    }
+}
+
+html, body {
+    @apply min-h-svh;
+}

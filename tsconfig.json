@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["src/components/*"],
+            "@lib/*": ["src/lib/*"]
+        },
+        "exactOptionalPropertyTypes": false,
+    },
+    "extends": "astro/tsconfigs/strictest",
+    "exclude": [
+        "node_modules"
+    ],
+    "include": [
+        "./src",
+        "./astro.config.ts"
+    ],
+}
