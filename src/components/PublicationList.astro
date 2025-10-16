@@ -24,7 +24,7 @@ publications.forEach((pub) => {
     ? <span class="text-base-content/50 text-lg font-medium">No publications here yet.</span>
     : <div class="border-primary/50 ml-4 flex flex-col gap-5 border-s-[0.25rem] ps-7">
         {
-            publicationsByYear.entries().map(([year, pubs]) => <section class="relative">
+            Array.from(publicationsByYear.entries()).map(([year, pubs]) => <section class="relative">
                 <div class="bg-primary absolute start-[-2.875rem] -top-0.5 rounded-full p-2">
                     <Icon name="mdi:book-open-page-variant" class="text-primary-content size-4"/>
                 </div>
