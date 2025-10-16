@@ -1,0 +1,50 @@
+---
+import PersonCard from '#components/PersonCard.astro';
+import Base from '#layouts/Base.astro';
+import {
+    getEntries,
+    getCollection,
+    render,
+} from 'astro:content';
+
+export async function getStaticPaths() {
+    const publications = await getCollection('publications');
+    return publications.map((publication) => ({
+        params: { id: publication.id },
+        props: { publication },
+    }));
+}
+
+const { publication } = Astro.props;
+const { Content } = await render(publication);
+const people = await getEntries(publication.data.people ?? []);
+---
+<Base
+    title={publication.data.title}
+    breadcrumbs={[{ url: '/publications', name: 'Publications' }]}
+>
+    <Fragment slot="sidebar">
+        <aside class="card bg-base-200 shadow-sm">
+            <div class="card-body flex shrink-0 flex-col justify-start gap-3">
+                <span class="font-lg font-medium">We can also put an image here, awards, etc</span>
+                <span class="font-lg font-medium">{publication.data.venue}</span>
+                <span class="font-lg font-medium">{publication.data.date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
+            </div>
+        </aside>
+    </Fragment>
+
+    <div class="prose">
+        <Content />
+    </div>
+
+    <section>
+        <h2 class="heading-2">People</h2>
+        <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-6 md:grid-cols-3">
+            {
+                people.map((person) => (
+                    <PersonCard person={person} />
+                ))
+            }
+        </div>
+    </section>
+</Base>

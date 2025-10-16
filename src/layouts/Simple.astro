@@ -1,0 +1,15 @@
+---
+import Base, { type Props as BaseProps } from '#layouts/Base.astro';
+
+type Props = BaseProps;
+const { props } = Astro;
+---
+<Base {...props}>
+    {
+        Astro.slots.breadcrumbs
+            && <slot name="breadcrumbs" slot={Astro.slots.breadcrumbs && 'breadcrumbs'}/>
+    }
+    <div class="prose">
+        <slot />
+    </div>
+</Base>

@@ -8,6 +8,7 @@
     name: "light";
     default: true;
     --color-primary: #b246cc;
+    --color-primary-content: #ffffff;
     --color-secondary: #3D76CC;
     --radius-selector: 0.25rem;
     --radius-field: 0.25rem;
@@ -24,15 +25,20 @@
     --font-sans: Rubik,ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
-
-@layer utilities{
-    .prose {
-        & h1 {
-            @apply text-primary;
-        }
-    }
-}
-
 html, body {
     @apply min-h-svh;
+}
+
+@utility heading-1 { @apply text-4xl font-extrabold mt-0 mb-3; }
+@utility heading-2 { @apply text-2xl font-bold mt-8 mb-4; }
+@utility heading-3 { @apply text-xl font-semibold mt-7 mb-3; }
+@utility heading-4 { @apply text-base font-semibold mt-6 mb-2; }
+@layer utilities{
+    .prose h1 { @apply heading-1; }
+
+    .prose h2 { @apply heading-2; }
+
+    .prose h3 { @apply heading-3; }
+
+    .prose h4 { @apply heading-4; }
 }

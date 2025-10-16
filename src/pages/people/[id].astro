@@ -1,0 +1,105 @@
+---
+import { Picture } from 'astro:assets';
+import {
+    getCollection,
+    render,
+} from 'astro:content';
+import Base from '#layouts/Base.astro';
+import PublicationList from '#components/PublicationList.astro';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+    const people = await getCollection('people', (person) => person.data.hasPage);
+    return people.map((person) => ({
+        params: { id: person.id },
+        props: { person },
+    }));
+}
+
+const { person } = Astro.props;
+const { Content } = await render(person);
+const publications = await getCollection('publications', (publication) => publication.data.people?.some((p) => p.id === person.id));
+publications.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base
+    title={person.data.name}
+    breadcrumbs={[{ url: '/people', name: 'People' }]}
+>
+    <Fragment slot="sidebar">
+        <aside class="card bg-base-200 shadow-sm">
+            <div class="card-body flex shrink-0 flex-row items-center justify-start gap-3 md:flex-col">
+                <div class="avatar w-full max-w-[128px] md:max-w-[250px]">
+                    <div class="rounded">
+                        {person.data.photo !== undefined
+                            && <Picture src={person.data.photo} alt={person.data.name} layout="full-width"/>
+                        }
+                    </div>
+                </div>
+                <div class="flex shrink-0 flex-col gap-2">
+                    <div class="flex flex-col ps-[.3rem] md:items-center md:ps-0 md:text-lg">
+                        <span class="text-2xl font-semibold">{person.data.role}</span>
+                        {
+                            person.data.email !== undefined
+                            && <span class="font-normal">{person.data.email}</span>
+                        }
+                    </div>
+                    <div class="flex w-full flex-wrap items-center gap-2 md:justify-center">
+                        {
+                            person.data.personalURL !== undefined
+                            && <a
+                                href={person.data.personalURL}
+                                target="_blank"
+                                class="btn btn-square btn-ghost btn-sm text-primary md:btn-md"
+                                aria-label="Personal page"
+                            >
+                                <Icon name="mdi:house" class="size-6 md:size-10" />
+                            </a>
+                        }
+                        {
+                            person.data.linkedInURL !== undefined
+                            && <a
+                                href={person.data.linkedInURL}
+                                target="_blank"
+                                class="btn btn-square btn-ghost btn-sm text-primary md:btn-md"
+                                aria-label="LinkedIn"
+                            >
+                                <Icon name="mdi:linkedin" class="size-6 md:size-10" />
+                            </a>
+                        }
+                        {
+                            person.data.scholarURL !== undefined
+                            && <a
+                                href={person.data.scholarURL}
+                                target="_blank"
+                                class="btn btn-square btn-ghost btn-sm text-primary md:btn-md"
+                                aria-label="Google Scholar"
+                            >
+                                <Icon name="mdi:school" class="size-6 md:size-10" />
+                            </a>
+                        }
+                        {
+                            person.data.githubURL !== undefined
+                            && <a
+                                href={person.data.githubURL}
+                                target="_blank"
+                                class="btn btn-square btn-ghost btn-sm text-primary md:btn-md"
+                                aria-label="GitHub"
+                            >
+                                <Icon name="mdi:github" class="size-6 md:size-10" />
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </Fragment>
+
+    <div class="prose">
+        <Content />
+    </div>
+
+    <section>
+        <h2 class="heading-2">Publications</h2>
+        <PublicationList publications={publications}/>
+    </section>
+</Base>

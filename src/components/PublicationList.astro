@@ -1,0 +1,54 @@
+---
+import { Icon } from 'astro-icon/components';
+import { type CollectionEntry } from 'astro:content';
+
+// Get from content
+type Props = {
+    publications: CollectionEntry<'publications'>[];
+};
+
+const { publications } = Astro.props;
+publications.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Use map instead of object to keep insertion order
+const publicationsByYear = new Map<number, typeof publications>();
+publications.forEach((pub) => {
+    const year = pub.data.date.getFullYear();
+    if (!publicationsByYear.has(year)) {
+        publicationsByYear.set(year, []);
+    }
+    publicationsByYear.get(year)!.push(pub);
+});
+---
+{publications.length === 0
+    ? <span class="text-base-content/50 text-lg font-medium">No publications here yet.</span>
+    : <div class="border-primary/50 ml-4 flex flex-col gap-5 border-s-[0.25rem] ps-7">
+        {
+            publicationsByYear.entries().map(([year, pubs]) => <section class="relative">
+                <div class="bg-primary absolute start-[-2.875rem] -top-0.5 rounded-full p-2">
+                    <Icon name="mdi:book-open-page-variant" class="text-primary-content size-4"/>
+                </div>
+                <h3 class="mb-2 text-lg font-semibold">{year}</h3>
+                <div class="list bg-base-200 rounded-box shadow-md">
+                    {
+                        pubs.map((publication) => (
+                            <a href={`/publications/${publication.id}`}>
+                                <article class="list-row hover:bg-base-300 active:bg-neutral active:text-neutral-content items-center">
+                                    <div class="list-col-grow">
+                                        <div class="mb-4 flex gap-4 md:hidden">
+                                            <div class="badge badge-primary">{publication.data.venue}</div>
+                                        </div>
+
+                                        <h4 class="text-xs font-semibold">{publication.data.title}</h4>
+                                        <span class="text-xs font-medium opacity-60">{publication.data.authors}</span>
+                                    </div>
+                                    <div class="badge badge-primary hidden md:block">{publication.data.venue}</div>
+                                </article>
+                            </a>
+                        ))
+                    }
+                </div>
+            </section>)
+        }
+    </div>
+}

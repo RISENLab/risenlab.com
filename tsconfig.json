@@ -1,4 +1,5 @@
 {
+    "extends": "astro/tsconfigs/strictest",
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
@@ -6,12 +7,14 @@
             "@lib/*": ["src/lib/*"]
         },
         "exactOptionalPropertyTypes": false,
+        "moduleResolution": "nodenext",
+        "module": "nodenext"
     },
-    "extends": "astro/tsconfigs/strictest",
     "exclude": [
         "node_modules"
     ],
     "include": [
+        "./.astro/types.d.ts",
         "./src",
         "./astro.config.ts"
     ],

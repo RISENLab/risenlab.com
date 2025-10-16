@@ -50,5 +50,6 @@ module.exports = {
         'import/prefer-default-export': 'off',
         'modules-newlines/import-declaration-newline': 'error',
         'modules-newlines/export-declaration-newline': 'error',
+        'tailwindcss/no-custom-classname': 'off',
     },
 };

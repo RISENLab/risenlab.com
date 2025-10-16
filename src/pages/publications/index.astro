@@ -1,0 +1,10 @@
+---
+import Base from '#layouts/Base.astro';
+import PublicationList from '#components/PublicationList.astro';
+import { getCollection } from 'astro:content';
+
+const publications = await getCollection('publications');
+---
+<Base title="Publications">
+    <PublicationList publications={publications} />
+</Base>

@@ -1,0 +1,33 @@
+---
+import { Picture } from 'astro:assets';
+import { type CollectionEntry } from 'astro:content';
+
+type Props = {
+    person: CollectionEntry<'people'>;
+};
+
+const { person } = Astro.props;
+
+const typeLabel = {
+    member: 'Member',
+    former: 'Former',
+    external: 'External',
+};
+---
+<a href={person.data.hasPage ? `/people/${person.id}` : '#'} class="h-full max-w-[250px]">
+    <article class="card bg-base-200 hover:bg-base-300 active:bg-neutral active:text-neutral-content card-sm shadow-sm">
+        <div class="card-body items-stretch">
+            <div class="avatar">
+                <div class="rounded">
+                    {person.data.photo !== undefined
+                    && <Picture src={person.data.photo} alt={person.data.name} layout="full-width" width={300} height={300}/>
+                    }
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="text-lg font-semibold">{person.data.name}</h3>
+                <span class="text-sm font-semibold opacity-70">{person.data.role}{person.data.type !== 'member' ? ` (${typeLabel[person.data.type]})` : ''}</span>
+            </div>
+        </div>
+    </article>
+</a>
