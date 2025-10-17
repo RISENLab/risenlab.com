@@ -6,7 +6,7 @@ import {
 import { glob } from 'astro/loaders';
 
 const publications = defineCollection({
-    loader: glob({ pattern: '*.mdx', base: 'src/publications' }),
+    loader: glob({ pattern: '*.{md,mdx}', base: 'src/publications' }),
     schema: z.object({
         date: z.date(), // Publication date, YYYY-MM-DD
         title: z.string(),
@@ -20,12 +20,12 @@ const publications = defineCollection({
     }),
 });
 const people = defineCollection({
-    loader: glob({ pattern: '*.mdx', base: 'src/people' }),
+    loader: glob({ pattern: '*.{md,mdx}', base: 'src/people' }),
     schema: ({ image }) => z.object({
         name: z.string(),
         role: z.string(),
         type: z.enum(['member', 'former', 'external']).optional().default('member'),
-        photo: image().optional(), // Relative path from the .mdx file, has to be in src/images
+        photo: image().optional(), // Relative path from the .md file, has to be in src/images
         hasPage: z.boolean().optional().default(false),
 
         email: z.string().optional(),
