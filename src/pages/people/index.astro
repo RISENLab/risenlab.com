@@ -6,12 +6,11 @@ import PersonCard from '#components/PersonCard.astro';
 const peopleCurrent = await getCollection('people', (person) => person.data.type === 'member');
 const peopleFormer = await getCollection('people', (person) => person.data.type === 'former');
 
-// Sort by id: mairieli first, then by name alphabetically
-const order = ['mairieli'];
+// Sort by priority first (lower numbers appear first), then alphabetically by name
 [peopleCurrent, peopleFormer].forEach((people) => people.sort((a, b) => {
-    const indexA = order.indexOf(a.id) ?? order.length;
-    const indexB = order.indexOf(b.id) ?? order.length;
-    if (indexA !== indexB) { return indexB - indexA; }
+    if (a.data.priority !== b.data.priority) {
+        return (a.data.priority ?? Infinity) - (b.data.priority ?? Infinity);
+    }
 
     return a.data.name.localeCompare(b.data.name);
 }));

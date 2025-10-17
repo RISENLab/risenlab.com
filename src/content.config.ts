@@ -25,6 +25,8 @@ const people = defineCollection({
         name: z.string(),
         role: z.string(),
         type: z.enum(['member', 'former', 'external']).optional().default('member'),
+        // Lower numbers appear first, default is alphabetical order.
+        priority: z.number().optional(),
         photo: image().optional(), // Relative path from the .md file, has to be in src/images
         hasPage: z.boolean().optional().default(false),
 
