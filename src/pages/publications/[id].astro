@@ -39,7 +39,7 @@ const people = await getEntries(publication.data.people ?? []);
 
     <section>
         <h2 class="heading-2">People</h2>
-        <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-6 md:grid-cols-3">
+        <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-3 md:grid-cols-3">
             {
                 people.map((person) => (
                     <PersonCard person={person} />

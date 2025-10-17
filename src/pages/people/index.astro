@@ -18,7 +18,7 @@ const peopleFormer = await getCollection('people', (person) => person.data.type 
 <Base title="People">
     <section>
         <h2 class="heading-2">Current members</h2>
-        <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-4">
+        <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-3 sm:grid-cols-3 md:grid-cols-4">
             {
                 peopleCurrent.map((person) => (
                     <PersonCard person={person} />
@@ -29,7 +29,7 @@ const peopleFormer = await getCollection('people', (person) => person.data.type 
 
     <section>
         <h2 class="heading-2">Former members</h2>
-        <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-4">
+        <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-3 sm:grid-cols-3 md:grid-cols-4">
             {
                 peopleFormer.map((person) => (
                     <PersonCard person={person} />

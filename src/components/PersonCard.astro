@@ -1,6 +1,6 @@
 ---
-import { Picture } from 'astro:assets';
 import { type CollectionEntry } from 'astro:content';
+import PersonAvatar from '#components/PersonAvatar.astro';
 
 type Props = {
     person: CollectionEntry<'people'>;
@@ -14,20 +14,15 @@ const typeLabel = {
     external: 'External',
 };
 ---
-<a href={person.data.hasPage ? `/people/${person.id}` : '#'} class="h-full max-w-[250px]">
-    <article class="card bg-base-200 hover:bg-base-300 active:bg-neutral active:text-neutral-content card-sm shadow-sm">
-        <div class="card-body items-stretch">
-            <div class="avatar">
-                <div class="rounded">
-                    {person.data.photo !== undefined
-                    && <Picture src={person.data.photo} alt={person.data.name} layout="full-width" width={300} height={300}/>
-                    }
-                </div>
-            </div>
-            <div class="text-center">
-                <h3 class="text-lg font-semibold">{person.data.name}</h3>
-                <span class="text-sm font-semibold opacity-70">{person.data.role}{person.data.type !== 'member' ? ` (${typeLabel[person.data.type]})` : ''}</span>
-            </div>
+<a
+    href={person.data.hasPage ? `/people/${person.id}` : person.data.personalURL ?? '#'}
+    class="btn btn-ghost h-full max-w-[200px] py-4"
+>
+    <article class="flex flex-col gap-2">
+        <PersonAvatar person={person} size={250} shadow responsive/>
+        <div class="text-center">
+            <h3 class="text-lg font-semibold">{person.data.name}</h3>
+            <span class="text-sm font-semibold opacity-70">{person.data.role}{person.data.type !== 'member' ? ` (${typeLabel[person.data.type]})` : ''}</span>
         </div>
     </article>
 </a>

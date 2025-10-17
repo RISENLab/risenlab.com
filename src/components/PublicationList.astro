@@ -1,6 +1,12 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { type CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import {
+    type CollectionEntry,
+    type ReferenceDataEntry,
+    getEntries,
+} from 'astro:content';
+import PersonAvatar from './PersonAvatar.astro';
 
 // Get from content
 type Props = {
@@ -19,6 +25,13 @@ publications.forEach((pub) => {
     }
     publicationsByYear.get(year)!.push(pub);
 });
+const peopleReferences = Array.from(
+    new Set(publications.flatMap((pub) => (pub.data.people ?? []))),
+);
+const peopleMap = Object.fromEntries(
+    (await getEntries(peopleReferences)).map((person) => [person.id, person]),
+);
+const person = (reference: ReferenceDataEntry<'people', string>) => peopleMap[reference.id]!;
 ---
 {publications.length === 0
     ? <span class="text-base-content/50 text-lg font-medium">No publications here yet.</span>
@@ -33,16 +46,23 @@ publications.forEach((pub) => {
                     {
                         pubs.map((publication) => (
                             <a href={`/publications/${publication.id}`}>
-                                <article class="list-row hover:bg-base-300 active:bg-neutral active:text-neutral-content items-center">
-                                    <div class="list-col-grow">
-                                        <div class="mb-4 flex gap-4 md:hidden">
+                                <article class="list-row hover:bg-base-300 bg-base-200 grid-cols-1">
+                                    <div class="flex w-full flex-col gap-x-4 gap-y-2 bg-inherit lg:flex-row lg:justify-between">
+                                        <div class="order-last shrink grow lg:order-first">
+                                            <h4 class="text-xs font-semibold">{publication.data.title}</h4>
+                                            <span class="text-xs font-medium opacity-60">{publication.data.authors}</span>
+                                        </div>
+                                        <div class="order-first flex shrink-0 items-center justify-between gap-2 bg-inherit lg:order-last">
+                                            <div class="avatar-group -space-x-6 bg-inherit">
+                                                {
+                                                    (publication.data.people ?? []).map((ref) => (
+                                                        <PersonAvatar person={person(ref)} size={48} class="max-w-[48px] border-0 bg-inherit p-[3px]" />
+                                                    ))
+                                                }
+                                            </div>
                                             <div class="badge badge-primary">{publication.data.venue}</div>
                                         </div>
-
-                                        <h4 class="text-xs font-semibold">{publication.data.title}</h4>
-                                        <span class="text-xs font-medium opacity-60">{publication.data.authors}</span>
                                     </div>
-                                    <div class="badge badge-primary hidden md:block">{publication.data.venue}</div>
                                 </article>
                             </a>
                         ))
