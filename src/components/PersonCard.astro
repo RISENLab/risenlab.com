@@ -4,9 +4,10 @@ import PersonAvatar from '#components/PersonAvatar.astro';
 
 type Props = {
     person: CollectionEntry<'people'>;
+    size?: 'lg' | 'sm'
 };
 
-const { person } = Astro.props;
+const { person, size = 'lg' } = Astro.props;
 
 const typeLabel = {
     member: 'Member',
@@ -16,13 +17,21 @@ const typeLabel = {
 ---
 <a
     href={person.data.hasPage ? `/people/${person.id}` : person.data.personalURL ?? '#'}
-    class="btn btn-ghost h-full max-w-[200px] py-4"
+    class="btn btn-ghost h-full max-w-[200px] items-start py-4"
+    class:list={size === 'lg' ? '' : 'btn-sm'}
+    target={person.data.hasPage ? '_self' : '_blank'}
 >
     <article class="flex flex-col gap-2">
         <PersonAvatar person={person} size={250} shadow responsive/>
         <div class="text-center">
-            <h3 class="text-lg font-semibold">{person.data.name}</h3>
-            <span class="text-sm font-semibold opacity-70">{person.data.role}{person.data.type !== 'member' ? ` (${typeLabel[person.data.type]})` : ''}</span>
+            <h3
+                class="font-semibold"
+                class:list={size === 'lg' ? 'text-lg' : 'text-sm'}
+            >{person.data.name}</h3>
+            <span
+                class="font-semibold opacity-70"
+                class:list={size === 'lg' ? 'text-sm' : 'text-xs'}
+            >{person.data.role}{person.data.type !== 'member' ? ` (${typeLabel[person.data.type]})` : ''}</span>
         </div>
     </article>
 </a>
