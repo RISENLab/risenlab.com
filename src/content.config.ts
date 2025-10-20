@@ -17,6 +17,7 @@ const publications = defineCollection({
         preprintURL: z.string().optional(), // URL to preprint
         codeURL: z.string().optional(), // URL to code repository
         venue: z.string().optional(), // Publication venue
+        award: z.string().optional(), // Award
     }),
 });
 const people = defineCollection({

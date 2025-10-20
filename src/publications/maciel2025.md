@@ -1,0 +1,11 @@
+---
+date: 2025-09-22
+title: "Investigating the Impact of GitHub Discussions on Maintainers’ Workload and Community Dynamics"
+authors: Ana Maciel, Mairieli Wessel, Igor Wiese, Igor Steinmacher
+people:
+- mairieli
+
+paperURL: https://sol.sbc.org.br/index.php/sbes/article/view/36984
+venue: SBES
+---
+The introduction of GitHub Discussions, a space for informal communication on GitHub, offers open-source communities a mechanism for engaging contributors beyond traditional issue tracking and code review. While promising, the specific effects of GitHub Discussions on project sustainability, contributor integration, and collaboration dynamics remain underexplored. This study investigates the impact of GitHub Discussions across four high-activity OSS projects by examining (1) changes in maintainers’ workload, (2) newcomer participation and progression from GitHub Discussions to technical contribution, and (3) the evolving structure of social and technical roles in project collaboration networks. Using data from the GitHub API, we collected and analyzed issues, pull requests, and discussions over a 48-month period.We applied linear regression and longitudinal social network analysis to evaluate participation trends and role centrality. Our results show that GitHub Discussions had limited impact on overall maintainer workload but served as a valuable entry point for newcomers, with a subset transitioning into impactful technical contributors. Nearly 80% of these newcomers had pull requests accepted, and many became active reviewers. In addition, GitHub Discussions enabled a shift in collaboration patterns, with non-core contributors increasingly occupying central positions in project networks. These findings underscore the strategic role of GitHub Discussions in supporting more inclusive, distributed, and sustainable OSS collaboration. GitHub Discussions help lower entry barriers, foster long-term contributor engagement, and redistribute influence beyond core teams. Future research should explore how discussion dynamics influence project governance, contributor retention, and the integration of non-code contributions into project health metrics.
