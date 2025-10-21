@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import PersonCard from '#components/PersonCard.astro';
-import Simple from '#layouts/Simple.astro';
+import Base from '#layouts/Base.astro';
 
 const peopleCurrent = await getCollection('people', (person) => person.data.type === 'member');
 const peopleFormer = await getCollection('people', (person) => person.data.type === 'former');
@@ -15,7 +15,7 @@ const peopleFormer = await getCollection('people', (person) => person.data.type 
     return a.data.name.localeCompare(b.data.name);
 }));
 ---
-<Simple title="People">
+<Base title="People">
     <section>
         <h2 class="heading-2">Current members</h2>
         <div class="xs:grid-cols-2 grid grid-cols-1 justify-items-center gap-3 sm:grid-cols-3 md:grid-cols-4">
@@ -37,4 +37,4 @@ const peopleFormer = await getCollection('people', (person) => person.data.type 
             }
         </div>
     </section>
-</Simple>
+</Base>

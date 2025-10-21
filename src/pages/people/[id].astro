@@ -3,7 +3,7 @@ import {
     getCollection,
     render,
 } from 'astro:content';
-import Sidebar from '#layouts/Sidebar.astro';
+import Base from '#layouts/Base.astro';
 import PublicationList from '#components/PublicationList.astro';
 import { Icon } from 'astro-icon/components';
 import PersonAvatar from '#components/PersonAvatar.astro';
@@ -22,11 +22,11 @@ const { Content } = await render(person);
 const projects = await getCollection('projects', (project) => project.data.people?.some((p) => p.id === person.id));
 const publications = await getCollection('publications', (publication) => publication.data.people?.some((p) => p.id === person.id));
 ---
-<Sidebar
+<Base
     title={person.data.name}
     breadcrumbs={[{ url: '/people', name: 'People' }]}
 >
-    <aside slot="sidebar" class="flex flex-row items-center justify-start gap-3 md:flex-col">
+    <aside slot="sidebar-start" class="flex flex-row items-center justify-start gap-3 md:flex-col">
         <PersonAvatar {person} size={200} class="max-w-[125px] md:max-w-[200px]" shadow responsive/>
         <div class="flex shrink-0 flex-col gap-2">
             <div class="flex flex-col ps-[.3rem] md:items-center md:ps-0 md:text-lg">
@@ -91,7 +91,7 @@ const publications = await getCollection('publications', (publication) => public
 
     <section slot="extra">
         <h2 class="heading-2">Projects</h2>
-        <div class="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {
                 projects.map((project) => (
                     <ProjectCard project={project} size="sm"/>
@@ -102,4 +102,4 @@ const publications = await getCollection('publications', (publication) => public
         <h2 class="heading-2">Publications</h2>
         <PublicationList publications={publications}/>
     </section>
-</Sidebar>
+</Base>

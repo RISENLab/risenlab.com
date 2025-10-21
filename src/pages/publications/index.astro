@@ -1,10 +1,10 @@
 ---
-import Simple from '#layouts/Simple.astro';
+import Base from '#layouts/Base.astro';
 import PublicationList from '#components/PublicationList.astro';
 import { getCollection } from 'astro:content';
 
 const publications = await getCollection('publications');
 ---
-<Simple title="Publications">
+<Base title="Publications">
     <PublicationList publications={publications} />
-</Simple>
+</Base>

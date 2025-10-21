@@ -1,8 +1,10 @@
 ---
 import PersonCard from '#components/PersonCard.astro';
-import Sidebar from '#layouts/Sidebar.astro';
+import ProjectCard from '#components/ProjectCard.astro';
+import Base from '#layouts/Base.astro';
 import { Icon } from 'astro-icon/components';
 import {
+    getEntry,
     getEntries,
     getCollection,
     render,
@@ -19,13 +21,16 @@ export async function getStaticPaths() {
 const { publication } = Astro.props;
 const { Content } = await render(publication);
 const people = await getEntries(publication.data.people ?? []);
+const project = publication.data.project !== undefined
+    ? (await getEntry(publication.data.project))
+    : undefined;
 ---
-<Sidebar
+<Base
     title={publication.data.title}
     subheading={publication.data.authors}
     breadcrumbs={[{ url: '/publications', name: 'Publications' }]}
 >
-    <aside slot="sidebar" class="card bg-base-200 shadow-sm">
+    <aside slot="sidebar-start" class="card bg-base-200 shadow-sm">
         <div class="card-body flex shrink-0 flex-col justify-start gap-3">
             <span class="font-lg font-medium">We can also put an image here.</span>
             <span class="font-lg font-medium">{publication.data.date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
@@ -48,6 +53,14 @@ const people = await getEntries(publication.data.people ?? []);
         <Content />
     </div>
 
+    {
+        project !== undefined
+        && <section slot="sidebar-end">
+            <h2 class="heading-2 mt-0">Project</h2>
+            <ProjectCard project={project} size="sm"/>
+        </section>
+    }
+
     <section slot="extra">
         <h2 class="heading-2">People</h2>
         <div class="xs:grid-cols-4 grid grid-cols-3 justify-items-center gap-3 lg:grid-cols-5">
@@ -58,4 +71,4 @@ const people = await getEntries(publication.data.people ?? []);
             }
         </div>
     </section>
-</Sidebar>
+</Base>

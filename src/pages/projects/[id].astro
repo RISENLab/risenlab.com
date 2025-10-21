@@ -1,7 +1,7 @@
 ---
 import PersonCard from '#components/PersonCard.astro';
 import PublicationList from '#components/PublicationList.astro';
-import Sidebar from '#layouts/Sidebar.astro';
+import Base from '#layouts/Base.astro';
 import {
     getEntries,
     getCollection,
@@ -21,17 +21,16 @@ const { Content } = await render(project);
 const people = await getEntries(project.data.people ?? []);
 const publications = await getCollection('publications', (publication) => publication.data.project?.id === project.id);
 ---
-<Sidebar
+<Base
     title={project.data.title}
-    collapse="after"
     breadcrumbs={[{ url: '/projects', name: 'Projects' }]}
 >
     <div class="prose">
         <Content />
     </div>
 
-    <section slot="sidebar">
-        <h2 class="heading-2">People</h2>
+    <section slot="sidebar-end">
+        <h2 class="heading-2 mt-0">People</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2">
             {
                 people.map((person) => (
@@ -45,4 +44,4 @@ const publications = await getCollection('publications', (publication) => public
         <h2 class="heading-2">Publications</h2>
         <PublicationList publications={publications}/>
     </section>
-</Sidebar>
+</Base>
