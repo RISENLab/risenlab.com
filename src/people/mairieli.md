@@ -10,4 +10,3 @@ linkedInURL: https://www.linkedin.com/in/mairieli/
 scholarURL: https://scholar.google.com/citations?user=qXE1jdQAAAAJ
 githubURL: https://github.com/mairieli
 ---
-Hi! This is a short bio.

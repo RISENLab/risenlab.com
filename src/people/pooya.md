@@ -1,6 +1,6 @@
 ---
 name: Pooya Rostami Mazrae 
-role: Visiting PhD Candidate
+role: Visiting Researcher
 photo: ../images/people/pooya.jpg
 hasPage: false
 personalURL: https://pooya-rostami.github.io/

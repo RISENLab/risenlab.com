@@ -3,6 +3,7 @@ name: Jonan Richards
 role: PhD Candidate
 photo: ../images/people/jonan.jpg
 hasPage: true
+priority: 3
 email: jonan.richards [at] ru.nl
 personalURL: https://jonan.nl
 linkedInURL: https://linkedin.com/in/jonan-richards/

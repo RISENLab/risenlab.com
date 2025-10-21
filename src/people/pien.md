@@ -3,7 +3,8 @@ name: Pien Rooijendijk
 role: PhD Candidate
 photo: ../images/people/pien.jpg
 hasPage: true
-email: pien.Rooijendijk [at] ru.nl
+priority: 2
+email: pien.rooijendijk [at] ru.nl
 personalURL: https://prooijendijk.nl/
 ---
 Hi! This is a very long bio.

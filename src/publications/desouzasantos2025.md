@@ -4,6 +4,7 @@ title: "From Diverse Origins to a DEI Crisis: The Pushback Against Equity, Diver
 authors: Ronnie de Souza Santos, Cleyton Magalhaes, Ann Barcomb, Mairieli Wessel
 people:
 - ronnie
+- cleyton
 - mairieli
 
 paperURL: https://link.springer.com/chapter/10.1007/978-3-032-04207-1_12
