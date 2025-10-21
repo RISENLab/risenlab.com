@@ -60,8 +60,8 @@ const person = (reference: ReferenceDataEntry<'people', string>) => peopleMap[re
                                         <div class="badge badge-primary badge-outline">{publication.data.venue}</div>
                                         <div class="avatar-group -space-x-6 bg-inherit">
                                             {
-                                                (publication.data.people ?? []).map((ref) => (
-                                                    <PersonAvatar person={person(ref)} size={48} class="max-w-[48px] border-0 bg-inherit p-[3px]" />
+                                                (publication.data.people ?? []).map((ref, i) => (
+                                                    <PersonAvatar person={person(ref)} size={48} class="max-w-[48px] border-0 bg-inherit p-[3px]" style={`z-index: ${20 - i};`}/>
                                                 ))
                                             }
                                         </div>

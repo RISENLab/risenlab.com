@@ -1,26 +1,27 @@
 ---
 import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
 import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
 type Props = {
     person: CollectionEntry<'people'>;
     size: number;
-    class?: string;
     shadow?: boolean;
     responsive?: boolean;
-};
+    class?: string;
+} & HTMLAttributes<'div'>;
 
 const {
-    person, size, class: classes = '', shadow = false, responsive = false,
+    person, size, shadow = false, responsive = false, class: classes = '', ...rest
 } = Astro.props;
 ---
-<div class="avatar avatar-placeholder" class:list={classes}>
+<div class="avatar avatar-placeholder" class:list={classes} {...rest}>
     <div class={'rounded-full bg-gray-300'} class:list={{ 'shadow-lg': shadow }} style={responsive ? 'width: 100%' : `width: ${size}px;`}>
         {
             person.data.photo !== undefined
                 ? <Picture src={person.data.photo} alt={person.data.name} layout="full-width" width={size} height={size} class="rounded-full"/>
-                : <Icon name="mdi:account" class={`size-[ text-gray-700${size}px] p-[12.5%]`}>
+                : <Icon name="mdi:account" class={`size-[ text-gray-700${size}px] p-[12.5%]`} />
         }
     </div>
 </div>
