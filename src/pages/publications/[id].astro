@@ -1,6 +1,7 @@
 ---
 import PersonCard from '#components/PersonCard.astro';
 import Base from '#layouts/Base.astro';
+import { Icon } from 'astro-icon/components';
 import {
     getEntries,
     getCollection,
@@ -26,9 +27,20 @@ const people = await getEntries(publication.data.people ?? []);
     <Fragment slot="sidebar">
         <aside class="card bg-base-200 shadow-sm">
             <div class="card-body flex shrink-0 flex-col justify-start gap-3">
-                <span class="font-lg font-medium">We can also put an image here, awards, etc</span>
-                <span class="font-lg font-medium">{publication.data.venue}</span>
+                <span class="font-lg font-medium">We can also put an image here.</span>
                 <span class="font-lg font-medium">{publication.data.date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
+                <div class="flex flex-row flex-wrap gap-1">
+                    <div class="badge badge-primary badge-outline font-medium">
+                        <span>{publication.data.venue}</span>
+                    </div>
+                    {
+                        publication.data.award !== undefined
+                        && <div class="badge badge-primary font-medium">
+                            <Icon name="mdi:trophy" class="size-4"/>
+                            <span>{publication.data.award}</span>
+                        </div>
+                    }
+                </div>
             </div>
         </aside>
     </Fragment>

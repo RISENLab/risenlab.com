@@ -1,6 +1,5 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { Picture } from 'astro:assets';
 import {
     type CollectionEntry,
     type ReferenceDataEntry,
@@ -35,32 +34,36 @@ const person = (reference: ReferenceDataEntry<'people', string>) => peopleMap[re
 ---
 {publications.length === 0
     ? <span class="text-base-content/50 text-lg font-medium">No publications here yet.</span>
-    : <div class="border-primary/50 ml-4 flex flex-col gap-5 border-s-[0.25rem] ps-7">
+    : <div class="timeline flex flex-col gap-5">
         {
-            Array.from(publicationsByYear.entries()).map(([year, pubs]) => <section class="relative">
-                <div class="bg-primary absolute start-[-2.875rem] -top-0.5 rounded-full p-2">
-                    <Icon name="mdi:book-open-page-variant" class="text-primary-content size-4"/>
+            Array.from(publicationsByYear.entries()).map(([year, pubs]) => <section class="timeline-section">
+                <div class="timeline-point">
+                    <Icon name="mdi:book-open-page-variant"/>
                 </div>
                 <h3 class="mb-2 text-lg font-semibold">{year}</h3>
                 <div class="list bg-base-200 rounded-box shadow-md">
                     {
                         pubs.map((publication) => (
                             <a href={`/publications/${publication.id}`}>
-                                <article class="list-row hover:bg-base-300 bg-base-200 grid-cols-1">
-                                    <div class="flex w-full flex-col gap-x-4 gap-y-2 bg-inherit lg:flex-row lg:justify-between">
-                                        <div class="order-last shrink grow lg:order-first">
-                                            <h4 class="text-xs font-semibold">{publication.data.title}</h4>
-                                            <span class="text-xs font-medium opacity-60">{publication.data.authors}</span>
-                                        </div>
-                                        <div class="order-first flex shrink-0 items-center justify-between gap-2 bg-inherit lg:order-last">
-                                            <div class="avatar-group -space-x-6 bg-inherit">
-                                                {
-                                                    (publication.data.people ?? []).map((ref) => (
-                                                        <PersonAvatar person={person(ref)} size={48} class="max-w-[48px] border-0 bg-inherit p-[3px]" />
-                                                    ))
-                                                }
-                                            </div>
-                                            <div class="badge badge-primary">{publication.data.venue}</div>
+                                <article class="list-row hover:bg-base-300 bg-base-200 lg:justify-betweeny-between flex flex-col gap-x-2 gap-y-1 lg:flex-row lg:items-center">
+                                    <div class="shrink grow">
+                                        <h4 class="text-xs font-semibold">{publication.data.title}</h4>
+                                        <span class="text-xs font-medium opacity-60">{publication.data.authors}</span>
+                                    </div>
+                                    <div class="flex shrink-0 items-center justify-between gap-2 bg-inherit">
+                                        {
+                                            publication.data.award !== undefined
+                                                && <div class="badge badge-primary tooltip px-0.75" data-tip={publication.data.award}>
+                                                    <Icon name="mdi:trophy" class="size-4"/>
+                                                </div>
+                                        }
+                                        <div class="badge badge-primary badge-outline">{publication.data.venue}</div>
+                                        <div class="avatar-group -space-x-6 bg-inherit">
+                                            {
+                                                (publication.data.people ?? []).map((ref) => (
+                                                    <PersonAvatar person={person(ref)} size={48} class="max-w-[48px] border-0 bg-inherit p-[3px]" />
+                                                ))
+                                            }
                                         </div>
                                     </div>
                                 </article>
@@ -72,3 +75,41 @@ const person = (reference: ReferenceDataEntry<'people', string>) => peopleMap[re
         }
     </div>
 }
+
+<style>
+    @reference '#styles/app.css';
+
+    .timeline {
+        --timeline-line-width: 0.25rem;
+        --timeline-padding: 1.75rem;
+        --timeline-point-size: 1.5rem;
+        --timeline-point-icon-size: 0.75rem;
+        --timeline-header-height: 1.75rem;
+        @apply ml-4 relative;
+    }
+
+    .timeline:before {
+        @apply bg-primary/50 absolute;
+        content: '';
+        top: calc(var(--timeline-point-size) / 2);
+        bottom: 0;
+        left: 0;
+        width: var(--timeline-line-width);
+    }
+
+    .timeline-section {
+        @apply relative ps-7;
+    }
+
+    .timeline-point {
+        @apply bg-primary text-primary-content absolute rounded-full;
+        left: calc((var(--timeline-line-width) - var(--timeline-point-size)) / 2);
+        top: calc((var(--timeline-header-height) - var(--timeline-point-size)) / 2);
+        padding: calc((var(--timeline-point-size) - var(--timeline-point-icon-size)) / 2);
+    }
+
+    .timeline-point * {
+        width: var(--timeline-point-icon-size);
+        height: var(--timeline-point-icon-size);
+    }
+</style>

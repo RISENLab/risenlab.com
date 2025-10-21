@@ -45,14 +45,14 @@ const canonicalURL = (Astro.site?.toString() ?? '').replace(/\/$/, '') + (path !
                 </div>
                 <div class="navbar-end">
                     {/* Mobile menu */}
-                    <div class="dropdown dropdown-end">
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-square md:hidden">
+                    <details class="dropdown dropdown-end">
+                        <summary class="btn btn-ghost btn-primary btn-square md:hidden">
                             <Icon name="mdi:menu" class="size-8"/>
-                        </div>
+                        </summary>
                         <ul class="menu dropdown-content bg-base-200 rounded-box text-base-content z-10 mt-5 w-52 items-start overflow-hidden p-2 font-semibold shadow">
                             <Navigation />
                         </ul>
-                    </div>
+                    </details>
                 </div>
             </nav>
         </header>
