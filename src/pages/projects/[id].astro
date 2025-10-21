@@ -1,0 +1,39 @@
+---
+import Base from '#layouts/Base.astro';
+import {
+    getEntries,
+    getCollection,
+    render,
+} from 'astro:content';
+
+export async function getStaticPaths() {
+    const projects = await getCollection('projects');
+    return projects.map((project) => ({
+        params: { id: project.id },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+// const people = await getEntries(publication.data.people ?? []);
+---
+<Base
+    title={project.data.title}
+    breadcrumbs={[{ url: '/projects', name: 'Projects' }]}
+>
+    <div class="prose">
+        <Content />
+    </div>
+
+    <!-- <section>
+        <h2 class="heading-2">People</h2>
+        <div class="xs:grid-cols-4 grid grid-cols-3 justify-items-center gap-3 lg:grid-cols-5">
+            {
+                people.map((person) => (
+                    <PersonCard person={person} size="sm"/>
+                ))
+            }
+        </div>
+    </section> -->
+</Base>

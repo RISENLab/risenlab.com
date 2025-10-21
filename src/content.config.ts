@@ -38,7 +38,13 @@ const people = defineCollection({
         githubURL: z.string().optional(), // URL to GitHub profile
     }),
 });
+const projects = defineCollection({
+    loader: glob({ pattern: '*.{md,mdx}', base: 'src/projects' }),
+    schema: z.object({
+        title: z.string(),
+    }),
+});
 
 export const collections = {
-    publications, people,
+    publications, people, projects
 };
