@@ -10,7 +10,7 @@ type Props = {
 const { project, size = 'lg' } = Astro.props;
 ---
 <a href={`/projects/${project.id}`} class="w-full h-full">
-    <article class={`card bg-base-200 max-w-[300px] w-full h-full ${size === 'lg' ? '' : 'card-sm'}`}>
+    <article class={`card bg-base-200 max-w-[300px] shadow w-full h-full ${size === 'lg' ? '' : 'card-sm'}`}>
         <figure>
             <ProjectImage {project} size={300} responsive/>
         </figure>
