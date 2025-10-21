@@ -1,0 +1,25 @@
+---
+layout: '#layouts/Simple.astro'
+title:
+heading: false
+breadcrumbs: false
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '#components/ProjectCard.astro';
+export const projects = await getCollection('projects');
+
+<div class="prose">
+    # This site is under construction
+    Check back soon for more!
+</div>
+
+<section>
+    <h2 class="heading-2">Projects</h2>
+    <div class="sm:grid-cols-2 grid grid-cols-1 gap-3 lg:grid-cols-3">
+        {
+            projects.map((project) => (
+                <ProjectCard project={project}/>
+            ))
+        }
+    </div>
+</section>

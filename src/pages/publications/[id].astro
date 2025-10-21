@@ -1,6 +1,6 @@
 ---
 import PersonCard from '#components/PersonCard.astro';
-import Base from '#layouts/Base.astro';
+import Sidebar from '#layouts/Sidebar.astro';
 import { Icon } from 'astro-icon/components';
 import {
     getEntries,
@@ -20,38 +20,35 @@ const { publication } = Astro.props;
 const { Content } = await render(publication);
 const people = await getEntries(publication.data.people ?? []);
 ---
-<Base
+<Sidebar
     title={publication.data.title}
+    subheading={publication.data.authors}
     breadcrumbs={[{ url: '/publications', name: 'Publications' }]}
 >
-    <Fragment slot="sidebar">
-        <aside class="card bg-base-200 shadow-sm">
-            <div class="card-body flex shrink-0 flex-col justify-start gap-3">
-                <span class="font-lg font-medium">We can also put an image here.</span>
-                <span class="font-lg font-medium">{publication.data.date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
-                <div class="flex flex-row flex-wrap gap-1">
-                    <div class="badge badge-primary badge-outline font-medium">
-                        <span>{publication.data.venue}</span>
-                    </div>
-                    {
-                        publication.data.award !== undefined
-                        && <div class="badge badge-primary font-medium">
-                            <Icon name="mdi:trophy" class="size-4"/>
-                            <span>{publication.data.award}</span>
-                        </div>
-                    }
+    <aside slot="sidebar" class="card bg-base-200 shadow-sm">
+        <div class="card-body flex shrink-0 flex-col justify-start gap-3">
+            <span class="font-lg font-medium">We can also put an image here.</span>
+            <span class="font-lg font-medium">{publication.data.date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
+            <div class="flex flex-row flex-wrap gap-1">
+                <div class="badge badge-primary badge-outline font-medium">
+                    <span>{publication.data.venue}</span>
                 </div>
+                {
+                    publication.data.award !== undefined
+                    && <div class="badge badge-primary font-medium">
+                        <Icon name="mdi:trophy" class="size-4"/>
+                        <span>{publication.data.award}</span>
+                    </div>
+                }
             </div>
-        </aside>
-    </Fragment>
-
-    <p class="mb-3 text-current/50 italic">{publication.data.authors}</p>
+        </div>
+    </aside>
 
     <div class="prose">
         <Content />
     </div>
 
-    <section>
+    <section slot="extra">
         <h2 class="heading-2">People</h2>
         <div class="xs:grid-cols-4 grid grid-cols-3 justify-items-center gap-3 lg:grid-cols-5">
             {
@@ -61,4 +58,4 @@ const people = await getEntries(publication.data.people ?? []);
             }
         </div>
     </section>
-</Base>
+</Sidebar>

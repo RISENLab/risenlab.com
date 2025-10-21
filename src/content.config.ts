@@ -12,6 +12,7 @@ const publications = defineCollection({
         title: z.string(),
         authors: z.string(), // List of all authors
         people: z.array(reference('people')).optional(), // References to people from our lab
+        project: reference('projects').optional(), // References to publications from our lab
 
         publicationURL: z.string().optional(), // URL to published paper
         preprintURL: z.string().optional(), // URL to preprint
@@ -40,11 +41,13 @@ const people = defineCollection({
 });
 const projects = defineCollection({
     loader: glob({ pattern: '*.{md,mdx}', base: 'src/projects' }),
-    schema: z.object({
+    schema: ({ image }) => z.object({
         title: z.string(),
+        image: image().optional(), // Relative path from the .md file, has to be in src/images
+        people: z.array(reference('people')).optional(), // References to people from our lab
     }),
 });
 
 export const collections = {
-    publications, people, projects
+    publications, people, projects,
 };

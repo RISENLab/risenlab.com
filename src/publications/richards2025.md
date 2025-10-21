@@ -5,6 +5,7 @@ authors: Jonan Richards and Mairieli Wessel
 people:
 - jonan
 - mairieli
+project: inclusive-ai
 
 paperURL: https://ieeexplore.ieee.org/abstract/document/11050035
 preprintURL: https://arxiv.org/abs/2502.07956

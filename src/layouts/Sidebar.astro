@@ -1,0 +1,29 @@
+---
+import Base, { type Props as BaseProps } from '#layouts/Base.astro';
+
+type Props = {
+    collapse?: 'before' | 'after';
+} & BaseProps;
+const { collapse = 'before', ...rest } = Astro.props;
+---
+<Base {...rest}>
+    <div class="flex flex-row items-stretch gap-10">
+        <main class="shrink grow">
+            {
+                collapse === 'after'
+                && <slot />
+            }
+            <div class="relative mt-3 mb-5 w-full shrink-0 grow-0 md:hidden">
+                <slot name="sidebar" />
+            </div>
+            {
+                collapse === 'before'
+                && <slot />
+            }
+            <slot name="extra" />
+        </main>
+        <div class="relative mt-0 hidden w-full max-w-[250px] shrink-0 grow-0 md:block">
+            <slot name="sidebar" />
+        </div>
+    </div>
+</Base>
