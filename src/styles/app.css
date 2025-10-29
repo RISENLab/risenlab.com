@@ -7,9 +7,9 @@
 @plugin "daisyui/theme" {
     name: "light";
     default: true;
-    --color-primary: #b246cc;
+    --color-primary: #7A61DD;
+    --color-accent: #2b224d;
     --color-primary-content: #ffffff;
-    --color-secondary: #3D76CC;
     --radius-selector: 0.25rem;
     --radius-field: 0.25rem;
     --radius-box: 0.25rem;

@@ -1,25 +1,27 @@
----
-layout: '#layouts/Base.astro'
-title:
-heading: false
-breadcrumbs: false
----
 import { getCollection } from 'astro:content';
+import Base from '#layouts/Base.astro';
 import ProjectCard from '#components/ProjectCard.astro';
 export const projects = await getCollection('projects');
 
-<div class="prose">
-    # This site is under construction
-    Check back soon for more!
-</div>
+<Base
+    heading={false}
+    breadcrumbs={false}
+>
+    <section slot="banner" class="mt-20">
+        <h1 class="heading-1">Mission</h1>
+        <p class="max-w-65ch">
+            At RISEN (Research on Inclusive Software ENgineering) Lab, we ...
+        </p>
+    </section>
 
-<section>
-    <h2 class="heading-2">Projects</h2>
-    <div class="sm:grid-cols-2 grid grid-cols-1 gap-3 lg:grid-cols-3">
-        {
-            projects.map((project) => (
-                <ProjectCard project={project}/>
-            ))
-        }
-    </div>
-</section>
+    <section>
+        <h2 class="heading-2">Projects</h2>
+        <div class="sm:grid-cols-2 grid grid-cols-1 gap-3 lg:grid-cols-3">
+            {
+                projects.map((project) => (
+                    <ProjectCard project={project}/>
+                ))
+            }
+        </div>
+    </section>
+</Base>

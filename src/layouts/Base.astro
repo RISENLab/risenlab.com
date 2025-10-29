@@ -3,6 +3,7 @@ import type { MarkdownLayoutProps } from 'astro';
 import '#styles/app.css';
 import Navigation from '#components/Navigation.astro';
 import { Icon } from 'astro-icon/components';
+import Banner from '#components/Banner.astro';
 
 export type PropsBase = {
     title: string;
@@ -13,7 +14,7 @@ export type PropsBase = {
 };
 export type Props = MarkdownLayoutProps<PropsBase> | PropsBase;
 const {
-    title, heading, subheading, canonical = true, breadcrumbs = [], sidebarCollapse = 'before',
+    title, heading, subheading, canonical = true, breadcrumbs = [],
 } = 'frontmatter' in Astro.props ? Astro.props.frontmatter : Astro.props;
 const siteTitle = 'RISEN Lab';
 
@@ -27,16 +28,17 @@ const canonicalURL = (Astro.site?.toString() ?? '').replace(/\/$/, '') + (path !
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="generator" content={Astro.generator} />
         <title>{title ? `${title} | ${siteTitle}` : siteTitle}</title>
-        {canonical
+        {
+            canonical
             && <link rel="canonical" href={canonicalURL}>
         }
     </head>
     <body class="bg-base-100 flex flex-col items-center">
-        <header class="stick bg-primary text-primary-content top-0 z-50 flex w-full justify-center shadow">
-            <nav class="navbar max-w-5xl px-4">
+        <header class="bg-accent text-primary-content sticky top-0 z-50 w-full shadow">
+            <nav class="navbar mx-auto max-w-5xl px-4">
                 <div class="navbar-start">
                     <a href="/">
-                        <img src="/logo-white.svg" alt="RISEN Lab Logo" class="w-30"/>
+                        <img src="/logo-light.svg" alt="RISEN Lab Logo" class="w-30"/>
                     </a>
 
                     {/* Desktop menu */}
@@ -57,6 +59,12 @@ const canonicalURL = (Astro.site?.toString() ?? '').replace(/\/$/, '') + (path !
                 </div>
             </nav>
         </header>
+        {
+            Astro.slots.banner !== undefined
+            && <Banner>
+                <slot name="banner" />
+            </Banner>
+        }
         <div class="flex w-full max-w-5xl grow flex-col p-4">
             {
                 breadcrumbs !== false
