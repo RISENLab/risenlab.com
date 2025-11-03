@@ -6,7 +6,7 @@ import {
 import Base from '#layouts/Base.astro';
 import PublicationList from '#components/PublicationList.astro';
 import { Icon } from 'astro-icon/components';
-import PersonAvatar from '#components/PersonAvatar.astro';
+import Image from '#components/Image.astro';
 import ProjectCard from '#components/ProjectCard.astro';
 
 export async function getStaticPaths() {
@@ -27,7 +27,7 @@ const publications = await getCollection('publications', (publication) => public
     breadcrumbs={[{ url: '/people', name: 'People' }]}
 >
     <aside slot="sidebar-start" class="flex flex-row items-center justify-start gap-3 md:flex-col">
-        <PersonAvatar {person} size={200} class="max-w-[125px] md:max-w-[200px]" shadow responsive/>
+        <Image src={person.data.photo} size={200} placeholder="mdi:account" class="max-w-[125px] rounded-full shadow-lg md:max-w-[200px]" responsive/>
         <div class="flex shrink-0 flex-col gap-2">
             <div class="flex flex-col ps-[.3rem] md:items-center md:ps-0 md:text-lg">
                 <span class="text-2xl font-semibold">{person.data.role}</span>
@@ -93,7 +93,7 @@ const publications = await getCollection('publications', (publication) => public
         {
             projects.length > 0
             && <h2 class="heading-2">Projects</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-2 justify-items-center gap-5 md:grid-cols-3 lg:grid-cols-4">
                 {
                     projects.map((project) => (
                         <ProjectCard project={project} size="sm"/>

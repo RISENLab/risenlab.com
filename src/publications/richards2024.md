@@ -6,6 +6,7 @@ people:
 - jonan
 - mairieli
 project: inclusive-ai
+image: ../images/publications/richards2024.png
 
 paperURL: https://ieeexplore.ieee.org/abstract/document/10795053
 preprintURL: https://arxiv.org/abs/2408.04477

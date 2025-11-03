@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry } from 'astro:content';
-import PersonAvatar from '#components/PersonAvatar.astro';
+import Image from '#components/Image.astro';
 
 type Props = {
     person: CollectionEntry<'people'>;
@@ -22,7 +22,7 @@ const typeLabel = {
     target={person.data.hasPage ? '_self' : '_blank'}
 >
     <article class="flex flex-col gap-2">
-        <PersonAvatar {person} size={250} shadow responsive/>
+        <Image src={person.data.photo} size={250} class="rounded-full shadow-lg" responsive placeholder="mdi:account"/>
         <div class="text-center">
             <h3
                 class="font-semibold"

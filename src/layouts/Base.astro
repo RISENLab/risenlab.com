@@ -52,7 +52,7 @@ const canonicalURL = (Astro.site?.toString() ?? '').replace(/\/$/, '') + (path !
                         <summary class="btn btn-ghost btn-primary btn-square md:hidden">
                             <Icon name="mdi:menu" class="size-8"/>
                         </summary>
-                        <ul class="menu dropdown-content bg-base-200 rounded-box text-base-content z-10 mt-5 w-52 items-start overflow-hidden p-2 font-semibold shadow">
+                        <ul class="menu dropdown-content bg-base-200 rounded-box text-base-content z-20 mt-5 w-52 items-start overflow-hidden p-2 font-semibold shadow">
                             <Navigation />
                         </ul>
                     </details>
@@ -65,7 +65,7 @@ const canonicalURL = (Astro.site?.toString() ?? '').replace(/\/$/, '') + (path !
                 <slot name="banner" />
             </Banner>
         }
-        <div class="flex w-full max-w-5xl grow flex-col p-4">
+        <div class="z-10 flex w-full max-w-5xl grow flex-col p-4">
             {
                 breadcrumbs !== false
                     && <div class="breadcrumbs text-sm">

@@ -1,6 +1,6 @@
 ---
 import PersonCard from '#components/PersonCard.astro';
-import ProjectImage from '#components/ProjectImage.astro';
+import Image from '#components/Image.astro';
 import PublicationList from '#components/PublicationList.astro';
 import Base from '#layouts/Base.astro';
 import {
@@ -31,7 +31,14 @@ const publications = await getCollection('publications', (publication) => public
     </div>
 
     <Fragment slot="sidebar-start">
-        <ProjectImage {project} size={300} responsive class="max-w-[300px] rounded mx-auto"/>
+        <Image
+            src={project.data.image}
+            size={300}
+            aspectRatio={4 / 3}
+            fullscreenModal
+            responsive
+            class="mx-auto max-w-[300px] rounded"
+        />
     </Fragment>
 
     <section slot="sidebar-end">

@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry } from 'astro:content';
-import ProjectImage from '#components/ProjectImage.astro';
+import Image from '#components/Image.astro';
 
 type Props = {
     project: CollectionEntry<'projects'>;
@@ -9,10 +9,10 @@ type Props = {
 
 const { project, size = 'lg' } = Astro.props;
 ---
-<a href={`/projects/${project.id}`} class="w-full h-full">
-    <article class={`card bg-base-200 max-w-[300px] shadow w-full h-full ${size === 'lg' ? '' : 'card-sm'}`}>
+<a href={`/projects/${project.id}`} class="h-full">
+    <article class={`card bg-base-200 hover:bg-base-300 h-full w-full max-w-[300px] shadow ${size === 'lg' ? '' : 'card-sm'}`}>
         <figure>
-            <ProjectImage {project} size={300} responsive/>
+            <Image src={project.data.image} size={300} aspectRatio={4 / 3} responsive/>
         </figure>
         <div class="card-body grow">
             <h3 class={`card-title ${size === 'lg' ? '' : 'text-xs'}`}>{project.data.title}</h3>

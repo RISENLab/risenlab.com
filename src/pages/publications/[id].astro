@@ -1,4 +1,5 @@
 ---
+import Image from '#components/Image.astro';
 import PersonCard from '#components/PersonCard.astro';
 import ProjectCard from '#components/ProjectCard.astro';
 import Base from '#layouts/Base.astro';
@@ -31,19 +32,66 @@ const project = publication.data.project !== undefined
     breadcrumbs={[{ url: '/publications', name: 'Publications' }]}
 >
     <aside slot="sidebar-start" class="card bg-base-200 shadow-sm">
+        {
+            publication.data.image !== undefined
+            && <figure>
+                <Image
+                    src={publication.data.image}
+                    size={300}
+                    aspectRatio={4 / 3}
+                    enforceAspectRatio={false}
+                    responsive
+                    fullscreenModal
+                />
+            </figure>
+        }
         <div class="card-body flex shrink-0 flex-col justify-start gap-3">
-            <span class="font-lg font-medium">We can also put an image here.</span>
-            <span class="font-lg font-medium">{publication.data.date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
+            <span class="font-lg font-medium">Published in {publication.data.date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
             <div class="flex flex-row flex-wrap gap-1">
                 <div class="badge badge-primary badge-outline font-medium">
                     <span>{publication.data.venue}</span>
                 </div>
                 {
                     publication.data.award !== undefined
-                    && <div class="badge badge-primary font-medium">
+                    && <div class="badge badge-primary badge-outline font-medium">
                         <Icon name="mdi:trophy" class="size-4"/>
                         <span>{publication.data.award}</span>
                     </div>
+                }
+            </div>
+            <div class="flex flex-wrap gap-1 md:flex-col">
+                {
+                    publication.data.paperURL !== undefined
+                    && <a
+                        href={publication.data.paperURL}
+                        target="_blank"
+                        class="btn btn-primary md:btn-block"
+                    >
+                        <Icon name="mdi:file-check-outline" class="size-4"/>
+                        <span>Publication</span>
+                    </a>
+                }
+                {
+                    publication.data.preprintURL !== undefined
+                    && <a
+                        href={publication.data.preprintURL}
+                        target="_blank"
+                        class="btn btn-primary md:btn-block"
+                    >
+                        <Icon name="mdi:file-eye-outline" class="size-4"/>
+                        <span>Preprint</span>
+                    </a>
+                }
+                {
+                    publication.data.codeURL !== undefined
+                    && <a
+                        href={publication.data.codeURL}
+                        target="_blank"
+                        class="btn btn-primary md:btn-block"
+                    >
+                        <Icon name="mdi:code" class="size-4"/>
+                        <span>Code</span>
+                    </a>
                 }
             </div>
         </div>

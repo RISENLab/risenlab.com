@@ -5,7 +5,7 @@ import {
     type ReferenceDataEntry,
     getEntries,
 } from 'astro:content';
-import PersonAvatar from './PersonAvatar.astro';
+import Image from '#components/Image.astro';
 
 // Get from content
 type Props = {
@@ -58,10 +58,10 @@ const person = (reference: ReferenceDataEntry<'people', string>) => peopleMap[re
                                                 </div>
                                         }
                                         <div class="badge badge-primary badge-outline">{publication.data.venue}</div>
-                                        <div class="avatar-group -space-x-6 bg-inherit">
+                                        <div class="flex -space-x-6 bg-inherit">
                                             {
                                                 (publication.data.people ?? []).map((ref, i) => (
-                                                    <PersonAvatar person={person(ref)} size={48} class="max-w-[48px] border-0 bg-inherit p-[3px]" style={`z-index: ${20 - i};`}/>
+                                                    <Image src={person(ref).data.photo} size={48} placeholder="mdi:account" class="max-w-[48px] rounded-full bg-inherit! p-[3px]" innerClass="rounded-full" style={`z-index: ${20 - i};`}/>
                                                 ))
                                             }
                                         </div>

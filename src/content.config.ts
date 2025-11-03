@@ -7,14 +7,15 @@ import { glob } from 'astro/loaders';
 
 const publications = defineCollection({
     loader: glob({ pattern: '*.{md,mdx}', base: 'src/publications' }),
-    schema: z.object({
+    schema: ({ image }) => z.object({
         date: z.date(), // Publication date, YYYY-MM-DD
         title: z.string(),
         authors: z.string(), // List of all authors
         people: z.array(reference('people')).optional(), // References to people from our lab
         project: reference('projects').optional(), // References to publications from our lab
+        image: image().optional(), // Relative path from the .md file, has to be in src/images
 
-        publicationURL: z.string().optional(), // URL to published paper
+        paperURL: z.string().optional(), // URL to published paper
         preprintURL: z.string().optional(), // URL to preprint
         codeURL: z.string().optional(), // URL to code repository
         venue: z.string().optional(), // Publication venue
