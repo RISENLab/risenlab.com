@@ -3,6 +3,7 @@ date: 2025-11-14
 title: "BRIDGE: Building Reliable Interfaces for Developer Guidance and Exploration through Static Analysis and LLM Translation"
 authors: Krishna Narasimhan and Mairieli Wessel
 people:
+- krishna
 - mairieli
 
 venue: BENEVOL
