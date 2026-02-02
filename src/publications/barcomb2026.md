@@ -1,7 +1,7 @@
 ---
 date: 2026-01-01
 title: "How Fair is Software Fairness Testing?"
-authors: Ann Barcomb, Mariana Bento, Giuseppe Destefanis, Giuseppe Destefanis, Cleyton Magalhães, Ronnie de Souza Santos, Mairieli Wessel
+authors: Ann Barcomb, Mariana Bento, Giuseppe Destefanis, Cleyton Magalhães, Ronnie de Souza Santos, Mairieli Wessel
 people:
 - cleyton
 - ronnie
