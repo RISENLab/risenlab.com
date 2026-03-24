@@ -40,5 +40,9 @@ html, body {
 
     .prose h3 { @apply heading-3; }
 
-    .prose h4 { @apply heading-4; }
+    .prose {
+        :root & {
+            --tw-prose-links: var(--color-primary);
+        }
+    }
 }
