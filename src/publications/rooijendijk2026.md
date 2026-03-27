@@ -5,6 +5,7 @@ authors: Pien Rooijendijk, Christoph Treude, Mairieli Wessel
 people:
 - pien
 - mairieli
+project: vulnerability-explanation
 
 paperURL: https://arxiv.org/abs/2601.19636
 venue: MSR Mining Challenge

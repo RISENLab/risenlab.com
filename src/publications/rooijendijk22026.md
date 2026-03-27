@@ -4,6 +4,7 @@ title: "Explainable AI for Software Vulnerabilities"
 authors: Pien Rooijendijk
 people:
 - pien
+project: vulnerability-explanation
 
 venue: CHASE DECS
 ---
