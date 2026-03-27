@@ -13,6 +13,7 @@ type Props = {
     enforceAspectRatio?: boolean;
     responsive?: boolean;
     fullscreenModal?: boolean;
+    credit?: string;
     placeholder?: string;
     class?: string;
     innerClass?: string;
@@ -25,7 +26,8 @@ const {
     aspectRatio = 1, 
     enforceAspectRatio = true, 
     responsive = false, 
-    fullscreenModal = false, 
+    fullscreenModal = false,
+    credit = undefined,
     placeholder = 'mdi:image-area', 
     class: classes = '', 
     innerClass = '', 
@@ -74,10 +76,19 @@ const formatStyle = (style: string | astroHTML.JSX.CSSProperties | null | undefi
             && (
                 <button 
                     onclick={`document.getElementById('${modalID}').showModal();`}
-                    class="absolute bottom-2 right-2 btn btn-soft rounded-full shadow-md p-2 opacity-80 hover:opacity-100"
+                    class="absolute top-2 right-2 btn btn-soft rounded-full shadow-md p-2 opacity-80 hover:opacity-100"
                 >
                     <Icon name="mdi:fullscreen" class="size-5" />
                 </button>
+            )
+    }
+
+    {
+        credit !== undefined
+            && (
+                <span class="absolute bottom-2 right-2 badge badge-xs badge-soft opacity-70">
+                    <Fragment set:html={credit}/>
+                </span>
             )
     }
 </div>

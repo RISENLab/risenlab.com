@@ -35,8 +35,8 @@ const publications = await getCollection('publications', (publication) => public
             src={project.data.image}
             size={300}
             aspectRatio={4 / 3}
-            fullscreenModal
             responsive
+            credit={project.data.imageCredit}
             class="mx-auto max-w-[300px] rounded"
         />
     </Fragment>

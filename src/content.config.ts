@@ -45,6 +45,7 @@ const projects = defineCollection({
     schema: ({ image }) => z.object({
         title: z.string(),
         image: image().optional(), // Relative path from the .md file, has to be in src/images
+        imageCredit: z.string().optional(),
         people: z.array(reference('people')).optional(), // References to people from our lab
     }),
 });
