@@ -14,23 +14,32 @@ const typeLabel = {
     former: 'Former',
     external: 'External',
 };
+
+const link = person.data.hasPage ? `/people/${person.id}` : person.data.personalURL;
 ---
 <a
-    href={person.data.hasPage ? `/people/${person.id}` : person.data.personalURL ?? '#'}
-    class="btn btn-ghost h-full max-w-[200px] items-start py-4"
-    class:list={size === 'lg' ? '' : 'btn-sm'}
-    target={person.data.hasPage ? '_self' : '_blank'}
+    class="h-full max-w-[200px] items-start py-4"
+    class:list={link !== undefined ? [
+        size === 'lg' ? '' : 'btn-sm',
+        'btn btn-ghost', 'hover:bg-base-200/07',
+    ] : [
+        size === 'lg' ? 'px-4' : 'px-3',
+    ]}
+    {...(link !== undefined ? {
+        href: link ?? undefined,
+        target: person.data.hasPage ? '_self' : '_blank',
+    } : {})}
 >
     <article class="flex flex-col gap-2">
         <Image src={person.data.photo} size={250} class="rounded-full shadow-lg" responsive placeholder="mdi:account"/>
-        <div class="text-center">
+        <div class="flex flex-col text-center">
             <h3
                 class="font-semibold"
-                class:list={size === 'lg' ? 'text-lg' : 'text-sm'}
+                class:list={size === 'lg' ? 'text-lg' : 'text-xs leading-4'}
             >{person.data.name}</h3>
             <span
                 class="font-semibold opacity-70"
-                class:list={size === 'lg' ? 'text-sm' : 'text-xs'}
+                class:list={size === 'lg' ? 'text-sm' : 'text-[0.625rem] leading-4'}
             >{person.data.role}{person.data.type !== 'member' ? ` (${typeLabel[person.data.type]})` : ''}</span>
         </div>
     </article>
