@@ -1,9 +1,10 @@
 ---
 name: Eduardo Figueredo Pacheco
 role: Visiting Researcher
-hasPage: true
+hasPage: false
 photo: ../images/people/eduardo.jpg
 linkedInURL: https://www.linkedin.com/in/eduardofpacheco/
+type: former
 ---
 
 Hi! I’m **Eduardo Figueredo Pacheco**, a student/researcher focused on **Artificial Intelligence**. My current work involves **AI agent projects** using the **Model Context Protocol (MCP)**, exploring integrations with **different Large Language Models (LLMs)** and **agent deployment pipelines**.  
