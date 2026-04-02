@@ -1,0 +1,10 @@
+---
+import Base from '#layouts/Base.astro';
+import NewsList from '#components/NewsList.astro';
+import { getCollection } from 'astro:content';
+
+const news = await getCollection('news');
+---
+<Base title="News">
+    <NewsList news={news} />
+</Base>

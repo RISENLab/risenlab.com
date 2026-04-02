@@ -50,6 +50,20 @@ const projects = defineCollection({
     }),
 });
 
+const news = defineCollection({
+    loader: glob({ pattern: '*.{md,mdx}', base: 'src/news' }),
+    schema: ({ image }) => z.object({
+        date: z.date(), // News date, YYYY-MM-DD
+        title: z.string(),
+        people: z.array(reference('people')).optional(),
+        project: reference('projects').optional(), // Related project
+        publication: reference('publications').optional(), // Related paper, if any
+        image: image().optional(), // Optional thumbnail
+        category: z.enum(['Publication','Award','Grant','Event','Talk','Media','Team','Teaching','Project','Other',]).optional(),
+        externalURL: z.string().url().optional(), // Link to paper, event, article, etc.
+    }),
+});
+
 export const collections = {
-    publications, people, projects,
+    publications, people, projects, news,
 };
