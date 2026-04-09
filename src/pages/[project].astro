@@ -12,7 +12,7 @@ import {
 export async function getStaticPaths() {
     const projects = await getCollection('projects');
     return projects.map((project) => ({
-        params: { id: project.id },
+        params: { project: project.id },
         props: { project },
     }));
 }
