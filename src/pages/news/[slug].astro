@@ -1,0 +1,110 @@
+---
+import {
+    getCollection,
+    getEntries,
+    getEntry,
+    render,
+} from 'astro:content';
+import {
+    formatDate,
+    formatNewsCategory,
+    newsPostHasPage,
+} from '#content.config.ts';
+import Base from '#layouts/Base.astro';
+import Image from '#components/Image.astro';
+import ProjectCard from '#components/ProjectCard.astro';
+import PersonCard from '#components/PersonCard.astro';
+import PublicationList from '#components/PublicationList.astro';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+    const news = await getCollection('news', newsPostHasPage);
+
+    return news.map((post) => ({
+        params: { slug: post.data.slug ?? post.id },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const people = await getEntries(post.data.people ?? []);
+const project = post.data.project !== undefined
+    ? await getEntry(post.data.project)
+    : undefined;
+const publication = post.data.publication !== undefined
+    ? await getEntry(post.data.publication)
+    : undefined;
+---
+<Base
+    title={post.data.title}
+    breadcrumbs={[{ url: '/news', name: 'News' }]}
+>
+    <div class="prose">
+        <Content />
+    </div>
+
+    {publication !== undefined && (
+        <section>
+            <h2 class="heading-2">Publication</h2>
+            <PublicationList publications={[publication]} />
+        </section>
+    )}
+
+    <aside slot="sidebar-start">
+        <div class="flex flex-wrap gap-2">
+            <div class="badge badge-primary shrink-0 grow-0">
+                {formatDate(post.data.date)}
+            </div>
+            <div class="badge badge-primary badge-outline">
+                {formatNewsCategory(post.data.category)}
+            </div>
+        </div>
+
+        {post.data.image !== undefined && (
+            <Image
+                src={post.data.image}
+                size={300}
+                aspectRatio={4 / 3}
+                responsive
+                credit={post.data.imageCredit}
+                class="mx-auto mt-3 max-w-[300px] rounded"
+                fullscreenModal
+            />
+        )}
+
+        {
+            post.data.externalURL !== undefined
+            && <a
+                href={post.data.externalURL}
+                target="_blank"
+                class="btn btn-primary md:btn-block mt-3"
+            >
+                <Icon name="mdi:open-in-new" class="size-4"/>
+                <span>External Link</span>
+            </a>
+        }
+    </aside>
+
+    <aside slot="sidebar-end">
+        {project !== undefined && (
+            <section>
+                <h2 class="heading-2 mt-0">Project</h2>
+                <ProjectCard project={project} size="sm"/>
+            </section>
+        )}
+
+        {people.length > 0 && (
+            <section>
+                <h2 class="heading-2">People</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2">
+                    {
+                        people.map((person) => (
+                            <PersonCard person={person} size="sm"/>
+                        ))
+                    }
+                </div>
+            </section>
+        )}
+    </aside>
+</Base>

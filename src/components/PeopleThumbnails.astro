@@ -1,0 +1,30 @@
+---
+import {
+    type CollectionEntry,
+    type ReferenceDataEntry,
+    getEntries,
+} from 'astro:content';
+import Image from '#components/Image.astro';
+
+// Get from content
+type Props = {
+    peopleReferences: ReferenceDataEntry<'people'>[];
+} | {
+    people: CollectionEntry<'people'>[];
+};
+
+let people: CollectionEntry<'people'>[] = [];
+if ('peopleReferences' in Astro.props) {
+    const { peopleReferences } = Astro.props;
+    people = await getEntries(peopleReferences);
+} else {
+    people = Astro.props.people;
+}
+---
+<div class="flex -space-x-6 bg-inherit">
+    {
+        people.map((person, i) => (
+            <Image src={person.data.photo} size={48} placeholder="mdi:account" class="max-w-[48px] rounded-full bg-inherit! p-[3px]" innerClass="rounded-full" style={`z-index: ${20 - i};`}/>
+        ))
+    }
+</div>

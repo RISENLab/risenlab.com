@@ -1,36 +1,41 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { type CollectionEntry } from 'astro:content';
-import NewsListCompact from './NewsListCompact.astro';
+import {
+    type CollectionEntry,
+    type ReferenceDataEntry,
+    getEntries,
+} from 'astro:content';
+import Image from '#components/Image.astro';
+import PublicationList from './PublicationList.astro';
 
 // Get from content
 type Props = {
-    news: CollectionEntry<'news'>[];
+    publications: CollectionEntry<'publications'>[];
 };
 
-const { news } = Astro.props;
-news.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const { publications } = Astro.props;
+publications.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 // Use map instead of object to keep insertion order
-const newsByYear = new Map<number, typeof news>();
-news.forEach((post) => {
-    const year = post.data.date.getFullYear();
-    if (!newsByYear.has(year)) {
-        newsByYear.set(year, []);
+const publicationsByYear = new Map<number, typeof publications>();
+publications.forEach((pub) => {
+    const year = pub.data.date.getFullYear();
+    if (!publicationsByYear.has(year)) {
+        publicationsByYear.set(year, []);
     }
-    newsByYear.get(year)!.push(post);
+    publicationsByYear.get(year)!.push(pub);
 });
 ---
-{news.length === 0
-    ? <span class="text-base-content/50 text-lg font-medium">No news here yet.</span>
+{publications.length === 0
+    ? <span class="text-base-content/50 text-lg font-medium">No publications here yet.</span>
     : <div class="timeline flex flex-col gap-5">
         {
-            Array.from(newsByYear.entries()).map(([year, posts]) => <section class="timeline-section">
+            Array.from(publicationsByYear.entries()).map(([year, publications]) => <section class="timeline-section">
                 <div class="timeline-point">
-                    <Icon name="mdi:newspaper-variant-multiple"/>
+                    <Icon name="mdi:book-open-page-variant"/>
                 </div>
                 <h3 class="mb-2 text-lg font-semibold">{year}</h3>
-                <NewsListCompact news={posts} />
+                <PublicationList publications={publications} />
             </section>)
         }
     </div>

@@ -1,7 +1,7 @@
 ---
 import PersonCard from '#components/PersonCard.astro';
 import Image from '#components/Image.astro';
-import PublicationList from '#components/PublicationList.astro';
+import PublicationTimeline from '#components/PublicationTimeline.astro';
 import Base from '#layouts/Base.astro';
 import {
     getEntries,
@@ -38,6 +38,7 @@ const publications = await getCollection('publications', (publication) => public
             responsive
             credit={project.data.imageCredit}
             class="mx-auto max-w-[300px] rounded"
+            fullscreenModal
         />
     </Fragment>
 
@@ -54,6 +55,6 @@ const publications = await getCollection('publications', (publication) => public
 
     <section slot="extra">
         <h2 class="heading-2">Publications</h2>
-        <PublicationList publications={publications}/>
+        <PublicationTimeline publications={publications}/>
     </section>
 </Base>

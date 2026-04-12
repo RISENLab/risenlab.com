@@ -4,7 +4,7 @@ import {
     render,
 } from 'astro:content';
 import Base from '#layouts/Base.astro';
-import PublicationList from '#components/PublicationList.astro';
+import PublicationTimeline from '#components/PublicationTimeline.astro';
 import { Icon } from 'astro-icon/components';
 import Image from '#components/Image.astro';
 import ProjectCard from '#components/ProjectCard.astro';
@@ -103,6 +103,6 @@ const publications = await getCollection('publications', (publication) => public
         }
 
         <h2 class="heading-2">Publications</h2>
-        <PublicationList publications={publications}/>
+        <PublicationTimeline publications={publications}/>
     </section>
 </Base>

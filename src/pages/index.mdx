@@ -1,7 +1,9 @@
 import { getCollection } from 'astro:content';
 import Base from '#layouts/Base.astro';
+import NewsListCompact from '#components/NewsListCompact.astro';
 import ProjectCard from '#components/ProjectCard.astro';
 export const projects = await getCollection('projects');
+export const news = await getCollection('news');
 
 <Base
     heading={false}
@@ -15,7 +17,12 @@ export const projects = await getCollection('projects');
     </section>
 
     <section>
-        <h2 class="heading-2 text-primary-content">Projects</h2>
+        <h2 class="heading-2 text-primary-content">Latest News</h2>
+        <NewsListCompact news={news} latest={3}/>
+    </section>
+
+    <section>
+        <h2 class="heading-2">Projects</h2>
         <div class="sm:grid-cols-2 grid grid-cols-1 gap-5 lg:grid-cols-3 justify-items-center">
             {
                 projects.map((project) => (

@@ -1,0 +1,125 @@
+---
+import { Icon } from 'astro-icon/components';
+import {
+    getEntry,
+    type CollectionEntry,
+} from 'astro:content';
+import {
+    formatDate,
+    formatNewsCategory,
+} from '#content.config.ts';
+
+// Get from content
+type Props = {
+    news: CollectionEntry<'news'>[];
+    latest?: number;
+};
+
+const { news, latest } = Astro.props;
+news.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const peopleReferences = news.flatMap((post) => {
+    if ('person' in post.data && post.data.person !== undefined) {
+        return [post.data.person];
+    }
+
+    if ('people' in post.data && post.data.people !== undefined) {
+        return post.data.people;
+    }
+    return [];
+});
+const personMap = Object.fromEntries(
+    await Promise.all(
+        peopleReferences.map(async (ref): Promise<[
+            string,
+            CollectionEntry<'people'>,
+        ]> => [
+            ref.id,
+            await getEntry(ref),
+        ]),
+    ),
+);
+---
+{news.length === 0
+    ? <span class="text-base-content/50 font-medium">No news here yet.</span>
+    : <Fragment>
+        <div class="list bg-base-200 rounded-box shadow-md">
+            {
+                news.slice(0, latest ?? news.length).map((post) => {
+                    let link : string | undefined;
+                    let external = false;
+
+                    if (post.data.category === 'team') {
+                        const person = personMap[post.data.person.id]!;
+                        if (person.data.hasPage) {
+                            link = `/people/${person.id}`;
+                        } else if (person.data.personalURL !== undefined) {
+                            link = person.data.personalURL;
+                            external = true;
+                        }
+                    } else if (post.data.hasPage) {
+                        link = `/news/${post.data.slug ?? post.id}`;
+                    } else if (post.data.externalURL !== undefined) {
+                        link = post.data.externalURL;
+                        external = true;
+                    }
+
+                    const Element = link !== undefined ? 'a' : 'div';
+                    return (
+                        <Element
+                            {...(link !== undefined ? {
+                                href: link,
+                                target: external ? '_blank' : '_self',
+                            } : {})}
+                        >
+                            <article
+                                class="list-row bg-base-200 flex flex-wrap items-center gap-2"
+                                class:list={link !== undefined ? 'hover:bg-base-300' : ''}
+                            >
+                                <div class="badge badge-primary badge-xs order-1 w-[80px] shrink-0 grow-0">
+                                    {formatDate(post.data.date)}
+                                </div>
+                                <div class="order-3 grow lg:hidden"></div>
+                                <div class="order-4 shrink-0 grow-0 lg:order-3">
+                                    {
+                                        link !== undefined && (
+                                            external
+                                                ? <button
+                                                    class="btn btn-xs btn-link p-0"
+                                                >
+                                                    <Icon name="mdi:open-in-new" class="size-4"/>
+                                                    <span>External</span>
+                                                </button>
+                                                : <button
+                                                    class="btn btn-xs btn-link p-0"
+                                                >
+                                                    <Icon name="mdi:chevron-right" class="size-4"/>
+                                                    <span>Read more</span>
+                                                </button>
+                                        )
+                                    }
+                                </div>
+                                <h4 class="order-last shrink grow basis-full text-xs font-semibold lg:order-2 lg:basis-auto">
+                                    <div class="badge badge-primary badge-outline badge-xs align-center mr-2">
+                                        {formatNewsCategory(post.data.category)}
+                                    </div>
+                                    {post.data.title}
+                                </h4>
+                            </article>
+                        </Element>
+                    );
+                })
+            }
+        </div>
+        {
+            latest !== undefined && news.length > latest && (
+                <div class="flex justify-center">
+                    <a href="news" class="btn btn-dash btn-primary btn-sm mt-4">
+                        <Icon name="mdi:chevron-down" class="size-4"/>
+                        <span>See all</span>
+                    </a>
+                </div>
+            )
+        }
+    </Fragment>
+}

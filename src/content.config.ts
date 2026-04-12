@@ -2,6 +2,7 @@ import {
     defineCollection,
     reference,
     z,
+    type CollectionEntry,
 } from 'astro:content';
 import { glob } from 'astro/loaders';
 
@@ -50,18 +51,53 @@ const projects = defineCollection({
     }),
 });
 
+const baseNewsPost = z.object({
+    date: z.date(), // News date, YYYY-MM-DD
+    title: z.string(),
+});
+
+export function newsPostHasPage(
+    entry: CollectionEntry<'news'>,
+): entry is CollectionEntry<'news'> & {
+    data: {
+        hasPage: true,
+    }
+} {
+    return 'hasPage' in entry.data && entry.data.hasPage === true;
+}
+
+const dateFormatter = new Intl.DateTimeFormat('nl-NL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+});
+
+export const formatDate = (date: Date): string => dateFormatter.format(date);
+
+export const formatNewsCategory = (category: string): string => (
+    category.charAt(0).toUpperCase() + category.slice(1)
+);
+
 const news = defineCollection({
-    loader: glob({ pattern: '*.{md,mdx}', base: 'src/news' }),
-    schema: ({ image }) => z.object({
-        date: z.date(), // News date, YYYY-MM-DD
-        title: z.string(),
-        people: z.array(reference('people')).optional(),
-        project: reference('projects').optional(), // Related project
-        publication: reference('publications').optional(), // Related paper, if any
-        image: image().optional(), // Optional thumbnail
-        category: z.enum(['Publication','Award','Grant','Event','Talk','Media','Team','Teaching','Project','Other',]).optional(),
-        externalURL: z.string().url().optional(), // Link to paper, event, article, etc.
-    }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: 'src/news' }),
+    schema: ({ image }) => z.discriminatedUnion('category', [
+        baseNewsPost.extend({
+            hasPage: z.literal(false).optional().default(false),
+            category: z.enum(['team']),
+            person: reference('people'),
+        }),
+        baseNewsPost.extend({
+            hasPage: z.boolean().optional().default(false),
+            slug: z.string().optional(), // URL slug for the news post page
+            category: z.enum(['award', 'grant', 'event', 'talk', 'media', 'teaching', 'project', 'other']),
+            people: z.array(reference('people')).optional(),
+            project: reference('projects').optional(), // Related project
+            publication: reference('publications').optional(), // Related paper, if any
+            image: image().optional(), // Optional thumbnail
+            imageCredit: z.string().optional(),
+            externalURL: z.string().url().optional(), // Link to event, blog post, etc.
+        }),
+    ]),
 });
 
 export const collections = {
