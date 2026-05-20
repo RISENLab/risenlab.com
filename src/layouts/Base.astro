@@ -125,13 +125,26 @@ const canonicalURL = (Astro.site?.toString() ?? '').replace(/\/$/, '') + (path !
                 }
             </div>
         </div>
-
-        <footer class="footer footer-center border-base-200 bg-base-100 text-base-content mt-4 border-t-1 p-4">
-            <div class="flex items-center justify-around gap-1">
-                <p>Copyright &copy; 2025 RISEN Lab</p>
-                <div class="mt-[-0.16rem] size-4">
-                    <img src="/logo-icon.svg" alt="Logo"/>
-                </div>
+        <footer class="border-base-200 mt-4 w-full border-t-1">
+            <div class="footer footer-vertical xs:footer-horizontal bg-base-100 text-base-content mx-auto max-w-5xl items-center gap-2 p-4">
+                <nav class="xs:justify-start flex w-full justify-center gap-4">
+                    <a
+                        class="btn btn-square btn-primary btn-soft xs:place-self-start"
+                        href="https://www.linkedin.com/company/risenlab"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <Icon name="mdi:linkedin" class="size-8"/>
+                    </a>
+                </nav>
+                <aside class="xs:justify-end flex w-full items-center justify-center">
+                    <p>Copyright &copy; 2025 RISEN Lab</p>
+                    <img
+                        class="mt-[-0.14rem] size-4"
+                        src="/logo-icon.svg"
+                        alt="Logo"
+                    />
+                </aside>
             </div>
         </footer>
     </body>
