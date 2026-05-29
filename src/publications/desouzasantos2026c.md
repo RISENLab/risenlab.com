@@ -1,5 +1,5 @@
 ---
-date: 2026-03-20
+date: 2026-04-20
 title: "Academic Integrity and Emotional Responses to Inappropriate LLM Use in Software Engineering Education"
 authors: Ronnie de Souza Santos, Italo Santos, Giuseppe Destefanis, Cleyton Magalhães, Mairieli Wessel
 people:
