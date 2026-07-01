@@ -1,0 +1,13 @@
+---
+date: 2026-06-26
+title: "How Humans, Bots, and Agents Communicate About Vulnerabilities in Pull Requests"
+authors: Pien Rooijendijk, Christoph Treude, Mairieli Wessel
+people:
+- pien
+- mairieli
+project: vulnerability-explanation
+
+paperURL: https://arxiv.org/abs/2606.28125
+venue: ICSME 
+---
+Developers may reference vulnerabilities in pull request discussions through both explicit identifiers, such as CVEs or GHSAs, and implicit security-related language (e.g., "unauthorized access" or "SQL injection"). Prior work has primarily focused on explicit identifiers, potentially overlooking vulnerability discussions that lack formal references. Bots and coding agents are becoming more common in pull requests, raising new questions about how different accounts communicate about vulnerabilities. In this registered report, we describe our planned study of vulnerability communication in pull requests by humans, bots, and coding agents. Building on the AIDev-pop dataset, we analyze explicit vulnerability references and implicit security-related signals across pull request titles, descriptions, review comments, commit messages, and timeline discussions. We further investigate whether these references are associated with vulnerabilities introduced or fixed in the modified code and how they relate to pull request review activity and outcomes. This study contributes a large-scale empirical investigation of vulnerability communication practices in modern software development.
